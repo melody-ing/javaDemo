@@ -1,6 +1,6 @@
 package com.example.demo;
 
-//Spring IoC = inversion of control
+/* Spring IoC = inversion of control */
 //將object的控制權交給了外部的Spring容器來處理
 
 //優點
@@ -32,7 +32,7 @@ package com.example.demo;
 //當有多個bean時可以指定要載入的bean的名字
 
 /* 初始化BEAN */
-//1. 使用@PostConstruct
+//1. 使用@PostConstruct(主要)
 //2. 實現InitializingBean interface 的 afterPropertiesSet() 方法
 
 /* BEAN 的生命週期 */
@@ -41,28 +41,37 @@ package com.example.demo;
 //3.對Bean進行初始化
 //4.運行成功
 
+/* @Value */
+//加在Bean或是設定Spring用的class裏面的變數上
+//讀取Spring Boot 設定檔(application.properties)中指定的key的值
+//只能叫application.properties或是application.yml
 
-import jakarta.annotation.PostConstruct;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
 public class HpPrinter implements Printer {
-
+    @Value("${printer.count:20}")
+//    如果在properties檔案找不到這個value就會使用變數後面冒號的預設值
     private int count;
 
-    //  初始化這個bean，加上@PostConstruct註解，並且一定要是public方法
-    @PostConstruct
-    public void init() {
-        count = 5;
-    }
+    @Value("${printer.name}")
+//    呼叫application裡面的值，存到name裡面
+//    習慣會將變數存在那裏
+    private String name;
+
+//    初始化這個bean，加上@PostConstruct註解，並且一定要是public方法
+//    @PostConstruct
+//    public void init() {
+//        count = 5;
+//    }
 
 
     @Override
 
 // 實現介面時，需要定義介面中的所有方法，並且要設定成public
     public void print(String message) {
-        count--;
-        System.out.println("Hp印表機 " + message); //sout
-        System.out.println("剩餘使用次數" + count);
+        System.out.println("HP印表機 " + message); //sout
     }
 }
