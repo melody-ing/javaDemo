@@ -3,6 +3,7 @@ package com.example.demo;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -49,9 +50,14 @@ import java.util.List;
 //@PutMappint("/userData") : 指定說只能用PUT
 //@DeleteMappint("/userData") : 指定說只能用DELETE
 
+/* spring-boot-starter-validation */
+//@RequestBody使用時要在方法參數前加上 @Valid
+//@RequestParam, @RequestHeader, @PathVariable 使用時要在Controller參數前加上 @Validated
+
 
 @RequestMapping("/detail")
 @RestController
+@Validated
 public class MyController {
     @Autowired //在呼叫bean時需要寫這註解
     @Qualifier("hpPrinter") //呼叫bean時class的開頭是小寫
