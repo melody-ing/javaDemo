@@ -1,0 +1,25 @@
+{
+  "id": 123,
+  "name": "Melody",
+  "score": 95.5,
+  "graduate": true,
+  "age": null,
+  "courseList": [
+    "math",
+    "english"
+  ],
+  "pet": {
+    "name": "Onigiri",
+    "age": 2
+  },
+  "petList": [
+    {
+      "name": "阿鯊",
+      "age": 4
+    },
+    {
+      "name": "吉伊卡哇",
+      "age": 5
+    }
+  ]
+}
