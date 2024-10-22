@@ -3,6 +3,8 @@ package com.example.demo;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -54,18 +56,27 @@ import java.util.List;
 //@RequestBody使用時要在方法參數前加上 @Valid
 //@RequestParam, @RequestHeader, @PathVariable 使用時要在Controller參數前加上 @Validated
 
+/* HTTP Status */
+//ResponseEntity<?>
+//系統response會自動會傳200 或 500，如果要自定義status code就要使用這個方法
+//類別為ResponseEntity<回傳值的類別>
+//回傳值要使用ResponseEntity.status(HttpStatus.要回傳的status code對應的單字).body(可以存放要回傳的值)
+
 
 @RequestMapping("/detail")
 @RestController
 @Validated
+@ControllerAdvice
 public class MyController {
     @Autowired //在呼叫bean時需要寫這註解
     @Qualifier("hpPrinter") //呼叫bean時class的開頭是小寫
     private Printer printer;
 
+
     @GetMapping("/usersData/{userId}")
-    public String read(@PathVariable Integer userId) {
-        return "GET使用者資料";
+    public ResponseEntity<String> read(@PathVariable Integer userId) {
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body("Get Response");
+
     }
 
     @PostMapping("/usersData")
@@ -108,5 +119,25 @@ public class MyController {
         return student;
     }
 
+    @RequestMapping("/exception1")
+    public String test1() {
+        throw new RuntimeException("test1 error");
+    }
+
+    @RequestMapping("/exception2")
+    public String test2() {
+        throw new IllegalArgumentException("test2 error");
+    }
+
+
+    @RequestMapping("/interceptor1")
+    public String test3() {
+        return "攔截器呦";
+    }
+
+    @RequestMapping("/interceptor2")
+    public String test4() {
+        return "第二個攔截器呦";
+    }
 
 }
